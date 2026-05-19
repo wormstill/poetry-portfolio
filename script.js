@@ -1,6 +1,27 @@
 (function () {
   'use strict';
 
+  /* ---- 枫叶飘落特效 ---- */
+  (function initLeaves() {
+    var leavesContainer = document.createElement('div');
+    leavesContainer.id = 'leaves-container';
+    document.body.appendChild(leavesContainer);
+
+    var leaves = ['🍁', '🍂', '🍁', '🍃', '🍂'];
+    var sizes = ['sm', 'md', 'md', 'lg', 'sm', 'md', 'md'];
+    var count = 20;
+
+    for (var i = 0; i < count; i++) {
+      var leaf = document.createElement('span');
+      leaf.className = 'leaf ' + sizes[i % sizes.length];
+      leaf.textContent = leaves[i % leaves.length];
+      leaf.style.left = Math.random() * 100 + '%';
+      leaf.style.animationDuration = (Math.random() * 8 + 10) + 's';
+      leaf.style.animationDelay = (Math.random() * 15) + 's';
+      leavesContainer.appendChild(leaf);
+    }
+  })();
+
   const container = document.getElementById('poems-container');
   const filterNav = document.querySelector('.filter-nav');
 
