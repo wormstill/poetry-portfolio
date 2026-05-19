@@ -1,0 +1,392 @@
+/* ============================================
+   晚睐 — 设计系统
+   ============================================ */
+
+:root {
+  /* 配色 */
+  --color-bg: #faf8f5;
+  --color-card: #ffffff;
+  --color-accent: #7c6f9e;
+  --color-accent-light: #a89bc2;
+  --color-heading: #3a3347;
+  --color-body: #4a4458;
+  --color-meta: #8c86a0;
+  --color-border: #e8e4ef;
+  --color-gradient-start: #e8e0f0;
+  --color-gradient-end: #f5e6e0;
+
+  /* 卡片渐变装饰 */
+  --card-accent-gradient: linear-gradient(90deg, #c4b5e0, #e8c4b8);
+  --card-hover-gradient: linear-gradient(135deg, #f0e8f8 0%, #fdf2ec 100%);
+
+  /* 字体 */
+  --font-heading: Georgia, 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  --font-body: Charter, Georgia, 'Noto Serif SC', 'STSong', serif;
+  --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 间距 */
+  --content-max: 720px;
+  --card-padding: 2.5rem;
+  --card-gap: 2rem;
+
+  /* 阴影 */
+  --shadow-card: 0 1px 3px rgba(58, 51, 71, 0.04), 0 4px 16px rgba(58, 51, 71, 0.03);
+  --shadow-card-hover: 0 2px 6px rgba(58, 51, 71, 0.06), 0 8px 24px rgba(58, 51, 71, 0.05);
+
+  /* 圆角 */
+  --radius-card: 16px;
+  --radius-btn: 24px;
+}
+
+/* ============================================
+   基础重置
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--color-body);
+  background:
+    radial-gradient(ellipse at 20% 50%, #f5f0fa 0%, var(--color-bg) 50%, #faf5f2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+::selection {
+  background: var(--color-gradient-start);
+  color: var(--color-heading);
+}
+
+/* ============================================
+   跳过链接 (无障碍)
+   ============================================ */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--color-heading);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 4px 4px;
+  z-index: 100;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ============================================
+   导航栏
+   ============================================ */
+
+.site-header {
+  padding: 1.5rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(250, 248, 245, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.site-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+}
+
+.filter-nav {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  background: transparent;
+  color: var(--color-meta);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.filter-btn.active {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+/* ============================================
+   英雄区
+   ============================================ */
+
+.hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+}
+
+.hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, 3.8rem);
+  color: var(--color-heading);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.75rem;
+}
+
+.hero-subtitle {
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  color: var(--color-meta);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================
+   主内容区
+   ============================================ */
+
+main {
+  flex: 1;
+  padding: 0 1rem 4rem;
+}
+
+.poems-container {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--card-gap);
+}
+
+.loading-text,
+.error-text,
+.empty-text {
+  text-align: center;
+  color: var(--color-meta);
+  font-family: var(--font-ui);
+  padding: 3rem 1rem;
+}
+
+.error-text {
+  color: #c06c6c;
+}
+
+/* ============================================
+   诗歌卡片
+   ============================================ */
+
+.poem-card {
+  background: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--card-padding);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.poem-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent-gradient);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .poem-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
+.card-header {
+  margin-bottom: 1.5rem;
+  padding-top: 0.25rem;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  color: var(--color-heading);
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+.card-author {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.card-body {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.9;
+  color: var(--color-body);
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.stanza-break {
+  display: block;
+  margin-top: 1.2rem;
+}
+
+.card-meta {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--color-meta);
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   页脚
+   ============================================ */
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--color-meta);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ============================================
+   工具类
+   ============================================ */
+
+.hidden {
+  display: none;
+}
+
+/* ============================================
+   响应式
+   ============================================ */
+
+@media (max-width: 640px) {
+  :root {
+    --card-padding: 1.5rem;
+    --card-gap: 1.25rem;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero {
+    padding: 2.5rem 1rem 1.5rem;
+  }
+
+  .poem-card {
+    border-radius: 12px;
+  }
+
+  .poem-card::before {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .card-body {
+    line-height: 1.85;
+  }
+
+  main {
+    padding-bottom: 2.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .filter-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filter-btn {
+    text-align: center;
+  }
+}
+
+/* ============================================
+   打印样式
+   ============================================ */
+
+@media print {
+  .site-header,
+  .filter-nav,
+  .skip-link,
+  .site-footer {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .poem-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .poem-card::before {
+    background: #999;
+  }
+}
