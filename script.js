@@ -151,9 +151,45 @@
       if (poem.form) parts.push(poem.form);
       meta.textContent = parts.join(' · ');
 
+      /* 视觉图 */
+      var visual = document.createElement("div");
+      visual.className = "poem-visual";
+
+      var visualTitle = document.createElement("div");
+      visualTitle.className = "visual-title";
+      visualTitle.textContent = poem.title;
+
+      var divider = document.createElement("span");
+      divider.className = "visual-divider";
+      divider.setAttribute("aria-hidden", "true");
+
+      var visualAuthor = document.createElement("div");
+      visualAuthor.className = "visual-author";
+      visualAuthor.textContent = "— " + poem.author;
+
+      visual.appendChild(visualTitle);
+      visual.appendChild(divider);
+
+      poem.lines.forEach(function (line) {
+        if (line === "") {
+          var vbr = document.createElement("span");
+          vbr.className = "visual-stanza-break";
+          vbr.setAttribute("aria-hidden", "true");
+          visual.appendChild(vbr);
+        } else {
+          var vp = document.createElement("p");
+          vp.className = "visual-line";
+          vp.textContent = line;
+          visual.appendChild(vp);
+        }
+      });
+
+      visual.appendChild(visualAuthor);
+
       card.appendChild(header);
       card.appendChild(body);
       card.appendChild(meta);
+      card.appendChild(visual);
       frag.appendChild(card);
     });
 

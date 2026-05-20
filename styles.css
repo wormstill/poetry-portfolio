@@ -478,6 +478,107 @@ main {
 }
 
 /* ============================================
+   诗词视觉图
+   ============================================ */
+
+.poem-visual {
+  margin-top: 1.5rem;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #3a2e4a 0%, #4a3550 25%, #5c3a3a 60%, #3d2d35 100%);
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  position: relative;
+}
+
+/* 顶部装饰光晕 */
+.poem-visual::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,220,180,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* 底部装饰光点 */
+.poem-visual::after {
+  content: '';
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,200,160,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.poem-visual .visual-title {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  color: #f0e0cc;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* 标题下装饰线 */
+.poem-visual .visual-divider {
+  display: block;
+  width: 40px;
+  height: 2px;
+  margin: 0 auto 1.2rem;
+  background: linear-gradient(90deg, transparent, rgba(210,180,150,0.6), transparent);
+  border-radius: 1px;
+}
+
+.poem-visual .visual-line {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: rgba(230,210,190,0.85);
+  line-height: 2.1;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.poem-visual .visual-stanza-break {
+  display: block;
+  margin-top: 0.8rem;
+}
+
+.poem-visual .visual-author {
+  margin-top: 1.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: rgba(200,175,150,0.55);
+  letter-spacing: 0.06em;
+  position: relative;
+  z-index: 1;
+}
+
+/* 移动端调整 */
+@media (max-width: 640px) {
+  .poem-visual {
+    padding: 1.6rem 1.2rem;
+    border-radius: 10px;
+  }
+
+  .poem-visual .visual-line {
+    line-height: 2;
+  }
+}
+
+/* ============================================
    页脚
    ============================================ */
 
