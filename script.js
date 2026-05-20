@@ -1,6 +1,15 @@
 (function () {
   'use strict';
 
+  /* ---- 幕布揭晓 ---- */
+  var curtain = document.getElementById('curtain');
+  curtain.addEventListener('click', function () {
+    this.classList.add('open');
+    this.addEventListener('transitionend', function () {
+      this.style.display = 'none';
+    }, { once: true });
+  });
+
   /* ---- 枫叶飘落特效 ---- */
   (function initLeaves() {
     var leavesContainer = document.createElement('div');

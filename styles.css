@@ -39,6 +39,173 @@
 }
 
 /* ============================================
+   幕布揭晓
+   ============================================ */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.curtain-panel {
+  position: fixed;
+  top: 0;
+  width: 50vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #2d1b3d 0%, #4a2c3e 30%, #5c3a2e 70%, #3a1f2a 100%);
+  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+  z-index: 1001;
+}
+
+.curtain-panel::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 65% 35%, rgba(255,245,235,0.25) 0%, rgba(200,180,160,0.08) 50%, transparent 70%);
+  box-shadow: 0 0 120px rgba(255,220,180,0.12), 0 0 240px rgba(200,160,130,0.06);
+  pointer-events: none;
+}
+
+.curtain-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 25%;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255,235,220,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.curtain-left {
+  left: 0;
+}
+
+.curtain-left::before {
+  right: -60px;
+}
+
+.curtain-left::after {
+  right: -30px;
+}
+
+.curtain-right {
+  right: 0;
+}
+
+.curtain-right::before {
+  left: -60px;
+}
+
+.curtain-right::after {
+  left: -30px;
+}
+
+/* 中线光效 */
+.curtain::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100vh;
+  background: linear-gradient(to bottom, transparent, rgba(255,220,180,0.5) 20%, rgba(255,220,180,0.6) 50%, rgba(255,220,180,0.5) 80%, transparent);
+  z-index: 1002;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.curtain.open::before {
+  opacity: 0;
+}
+
+/* 中心内容 */
+.curtain-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1003;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.curtain-title {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: #f5ece0;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 0 60px rgba(200,160,120,0.2);
+}
+
+.curtain-subtitle {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: rgba(240,225,205,0.7);
+  letter-spacing: 0.08em;
+  margin-bottom: 2.5rem;
+}
+
+.curtain-hint {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: rgba(240,225,205,0.45);
+  letter-spacing: 0.06em;
+  animation: hint-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.75; }
+}
+
+/* 开启状态 */
+.curtain.open .curtain-left {
+  transform: translateX(-100%);
+}
+
+.curtain.open .curtain-right {
+  transform: translateX(100%);
+}
+
+.curtain.open .curtain-center {
+  opacity: 0;
+}
+
+/* 移动端幕布调整 */
+@media (max-width: 640px) {
+  .curtain-panel::before {
+    width: 160px;
+    height: 160px;
+  }
+
+  .curtain-panel::after {
+    width: 100px;
+    height: 100px;
+    bottom: 20%;
+  }
+
+  .curtain-title {
+    letter-spacing: 0.1em;
+  }
+
+  .curtain-subtitle {
+    margin-bottom: 2rem;
+  }
+}
+
+/* ============================================
    基础重置
    ============================================ */
 
