@@ -29,7 +29,7 @@
   let activeCategory = 'all';
 
   /* ---- 加载数据 ---- */
-  fetch('poems.json')
+  fetch('poems.json?v=2')
     .then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
