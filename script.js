@@ -1,6 +1,25 @@
 (function () {
   'use strict';
 
+  /* ---- 幕布星尘粒子 ---- */
+  (function initStardust() {
+    var container = document.getElementById('curtain-stardust');
+    var count = 35;
+    for (var i = 0; i < count; i++) {
+      var dot = document.createElement('span');
+      dot.className = 'stardust-dot';
+      var size = 1 + Math.random() * 2.5;
+      dot.style.width = size + 'px';
+      dot.style.height = size + 'px';
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.top = Math.random() * 100 + '%';
+      dot.style.animationDuration = (8 + Math.random() * 16) + 's';
+      dot.style.animationDelay = Math.random() * 10 + 's';
+      dot.style.opacity = (0.2 + Math.random() * 0.5);
+      container.appendChild(dot);
+    }
+  })();
+
   /* ---- 幕布揭晓 ---- */
   var curtain = document.getElementById('curtain');
   curtain.addEventListener('click', function () {
@@ -151,40 +170,25 @@
       if (poem.form) parts.push(poem.form);
       meta.textContent = parts.join(' · ');
 
-      /* 视觉图 */
-      var visual = document.createElement("div");
-      visual.className = "poem-visual";
+      /* 夜空星辰视觉图 */
+      var visual = document.createElement('div');
+      visual.className = 'poem-visual';
 
-      var visualTitle = document.createElement("div");
-      visualTitle.className = "visual-title";
-      visualTitle.textContent = poem.title;
-
-      var divider = document.createElement("span");
-      divider.className = "visual-divider";
-      divider.setAttribute("aria-hidden", "true");
-
-      var visualAuthor = document.createElement("div");
-      visualAuthor.className = "visual-author";
-      visualAuthor.textContent = "— " + poem.author;
-
-      visual.appendChild(visualTitle);
-      visual.appendChild(divider);
-
-      poem.lines.forEach(function (line) {
-        if (line === "") {
-          var vbr = document.createElement("span");
-          vbr.className = "visual-stanza-break";
-          vbr.setAttribute("aria-hidden", "true");
-          visual.appendChild(vbr);
-        } else {
-          var vp = document.createElement("p");
-          vp.className = "visual-line";
-          vp.textContent = line;
-          visual.appendChild(vp);
-        }
-      });
-
-      visual.appendChild(visualAuthor);
+      var starCount = 45 + Math.floor(Math.random() * 50);
+      for (var s = 0; s < starCount; s++) {
+        var star = document.createElement('span');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        var starSize = 1 + Math.random() * 2.8;
+        star.style.width = starSize + 'px';
+        star.style.height = starSize + 'px';
+        star.style.setProperty('--star-opacity', (0.25 + Math.random() * 0.7));
+        star.style.setProperty('--twinkle-dur', (2 + Math.random() * 4) + 's');
+        star.style.setProperty('--twinkle-delay', Math.random() * 3 + 's');
+        star.style.setProperty('--glow-size', (starSize * 1.5) + 'px');
+        visual.appendChild(star);
+      }
 
       card.appendChild(header);
       card.appendChild(body);

@@ -1,23 +1,23 @@
 /* ============================================
-   晚睐 — 设计系统
+   晚睐 — 设计系统 (蓝色系)
    ============================================ */
 
 :root {
   /* 配色 */
-  --color-bg: #faf8f5;
+  --color-bg: #f4f6fa;
   --color-card: #ffffff;
-  --color-accent: #7c6f9e;
-  --color-accent-light: #a89bc2;
-  --color-heading: #3a3347;
-  --color-body: #4a4458;
-  --color-meta: #8c86a0;
-  --color-border: #e8e4ef;
-  --color-gradient-start: #e8e0f0;
-  --color-gradient-end: #f5e6e0;
+  --color-accent: #5b8db0;
+  --color-accent-light: #8ab8d8;
+  --color-heading: #1e3045;
+  --color-body: #3d5265;
+  --color-meta: #6b8ea5;
+  --color-border: #dce6f0;
+  --color-gradient-start: #d4e2f0;
+  --color-gradient-end: #d8e0f2;
 
   /* 卡片渐变装饰 */
-  --card-accent-gradient: linear-gradient(90deg, #c4b5e0, #e8c4b8);
-  --card-hover-gradient: linear-gradient(135deg, #f0e8f8 0%, #fdf2ec 100%);
+  --card-accent-gradient: linear-gradient(90deg, #8ab8d8, #7ba8d0);
+  --card-hover-gradient: linear-gradient(135deg, #e8f0f8 0%, #ecf2fa 100%);
 
   /* 字体 */
   --font-heading: Georgia, 'Noto Serif SC', 'STSong', 'SimSun', serif;
@@ -30,8 +30,8 @@
   --card-gap: 2rem;
 
   /* 阴影 */
-  --shadow-card: 0 1px 3px rgba(58, 51, 71, 0.04), 0 4px 16px rgba(58, 51, 71, 0.03);
-  --shadow-card-hover: 0 2px 6px rgba(58, 51, 71, 0.06), 0 8px 24px rgba(58, 51, 71, 0.05);
+  --shadow-card: 0 1px 3px rgba(30, 48, 69, 0.04), 0 4px 16px rgba(30, 48, 69, 0.03);
+  --shadow-card-hover: 0 2px 6px rgba(30, 48, 69, 0.06), 0 8px 24px rgba(30, 48, 69, 0.05);
 
   /* 圆角 */
   --radius-card: 16px;
@@ -54,105 +54,141 @@
   top: 0;
   width: 50vw;
   height: 100vh;
-  background: linear-gradient(135deg, #2d1b3d 0%, #4a2c3e 30%, #5c3a2e 70%, #3a1f2a 100%);
-  transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+  background: linear-gradient(170deg, #0a1628 0%, #0d1f3c 25%, #132442 50%, #0c1a32 80%, #080e1f 100%);
+  transition: transform 0.9s cubic-bezier(0.85, 0, 0.15, 1);
   z-index: 1001;
 }
 
-.curtain-panel::before {
-  content: '';
-  position: absolute;
-  top: 15%;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 65% 35%, rgba(255,245,235,0.25) 0%, rgba(200,180,160,0.08) 50%, transparent 70%);
-  box-shadow: 0 0 120px rgba(255,220,180,0.12), 0 0 240px rgba(200,160,130,0.06);
-  pointer-events: none;
-}
+.curtain-left { left: 0; }
+.curtain-right { right: 0; }
 
-.curtain-panel::after {
-  content: '';
-  position: absolute;
-  bottom: 25%;
+/* ---- 月亮 (右侧面板) ---- */
+.curtain-moon {
+  position: fixed;
+  top: 12%;
+  right: calc(25vw - 110px);
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, rgba(255,235,220,0.15) 0%, transparent 65%);
+  z-index: 1004;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 40% 38%, #faf8f0 0%, #f0ead8 12%, #e8e0c8 25%, #dcd4b4 45%, #c8c0a0 65%, #b0a888 100%);
+  box-shadow:
+    /* 环形山 */
+    28px 40px 0 16px rgba(180,170,140,0.28),
+    65px 22px 0 10px rgba(175,165,135,0.22),
+    -18px 55px 0 12px rgba(170,160,130,0.25),
+    -50px -15px 0 9px rgba(185,175,145,0.2),
+    15px -38px 0 11px rgba(175,165,135,0.22),
+    55px 70px 0 8px rgba(165,155,125,0.18),
+    -40px 25px 0 13px rgba(180,170,140,0.23),
+    0 -10px 0 14px rgba(178,168,138,0.2),
+    /* 外发光 */
+    0 0 30px rgba(200,195,170,0.25),
+    0 0 80px rgba(180,175,150,0.15),
+    0 0 150px rgba(160,155,135,0.08);
+  transition: transform 0.9s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.6s ease;
+}
+
+.curtain.open .curtain-moon {
+  transform: translateX(60vw);
+  opacity: 0;
+}
+
+/* ---- 左侧光晕 ---- */
+.curtain-left::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 60% 40%, rgba(180,200,230,0.2) 0%, rgba(120,150,200,0.06) 50%, transparent 70%);
+  box-shadow: 0 0 100px rgba(150,180,220,0.1);
   pointer-events: none;
 }
 
-.curtain-left {
-  left: 0;
+/* ---- 星尘粒子 ---- */
+.curtain-stardust {
+  position: fixed;
+  inset: 0;
+  z-index: 1002;
+  pointer-events: none;
 }
 
-.curtain-left::before {
-  right: -60px;
+.stardust-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: stardust-drift linear infinite;
 }
 
-.curtain-left::after {
-  right: -30px;
+@keyframes stardust-drift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-30px) translateX(15px);
+    opacity: 0;
+  }
 }
 
-.curtain-right {
-  right: 0;
-}
-
-.curtain-right::before {
-  left: -60px;
-}
-
-.curtain-right::after {
-  left: -30px;
-}
-
-/* 中线光效 */
+/* ---- 中线光效 ---- */
 .curtain::before {
   content: '';
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 2px;
+  width: 1.5px;
   height: 100vh;
-  background: linear-gradient(to bottom, transparent, rgba(255,220,180,0.5) 20%, rgba(255,220,180,0.6) 50%, rgba(255,220,180,0.5) 80%, transparent);
-  z-index: 1002;
+  background: linear-gradient(to bottom, transparent, rgba(180,200,230,0.5) 20%, rgba(200,220,245,0.55) 50%, rgba(180,200,230,0.5) 80%, transparent);
+  z-index: 1003;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
 }
 
 .curtain.open::before {
   opacity: 0;
 }
 
-/* 中心内容 */
+/* ---- 中心内容 ---- */
 .curtain-center {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1003;
+  z-index: 1005;
   text-align: center;
   pointer-events: none;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.55s ease, transform 0.55s ease;
 }
 
 .curtain-title {
   font-family: var(--font-heading);
   font-size: 3.5rem;
   font-size: clamp(3rem, 8vw, 5rem);
-  color: #f5ece0;
+  color: #e8edf5;
   font-weight: 700;
   letter-spacing: 0.15em;
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.3), 0 0 60px rgba(200,160,120,0.2);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.4), 0 0 80px rgba(140,170,210,0.25);
 }
 
 .curtain-subtitle {
   font-family: var(--font-ui);
   font-size: 0.9rem;
   font-size: clamp(0.9rem, 2vw, 1.15rem);
-  color: rgba(240,225,205,0.7);
+  color: rgba(200,215,235,0.7);
   letter-spacing: 0.08em;
   margin-bottom: 2.5rem;
 }
@@ -160,7 +196,7 @@
 .curtain-hint {
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  color: rgba(240,225,205,0.45);
+  color: rgba(190,210,230,0.45);
   letter-spacing: 0.06em;
   animation: hint-pulse 2.5s ease-in-out infinite;
 }
@@ -170,30 +206,40 @@
   50% { opacity: 0.75; }
 }
 
-/* 开启状态 */
+/* ---- 开启状态 ---- */
 .curtain.open .curtain-left {
-  transform: translateX(-100%);
+  transform: translateX(-102%);
 }
 
 .curtain.open .curtain-right {
-  transform: translateX(100%);
+  transform: translateX(102%);
 }
 
 .curtain.open .curtain-center {
   opacity: 0;
+  transform: translate(-50%, -50%) scale(0.95);
 }
 
 /* 移动端幕布调整 */
 @media (max-width: 640px) {
-  .curtain-panel::before {
-    width: 160px;
-    height: 160px;
+  .curtain-moon {
+    width: 120px;
+    height: 120px;
+    top: 15%;
+    right: calc(25vw - 60px);
+    box-shadow:
+      18px 26px 0 10px rgba(180,170,140,0.28),
+      42px 14px 0 7px rgba(175,165,135,0.22),
+      -12px 36px 0 8px rgba(170,160,130,0.25),
+      -32px -10px 0 6px rgba(185,175,145,0.2),
+      0 0 20px rgba(200,195,170,0.25),
+      0 0 60px rgba(180,175,150,0.15);
   }
 
-  .curtain-panel::after {
-    width: 100px;
-    height: 100px;
-    bottom: 20%;
+  .curtain-left::before {
+    width: 120px;
+    height: 120px;
+    right: -20px;
   }
 
   .curtain-title {
@@ -229,7 +275,7 @@ body {
   line-height: 1.8;
   color: var(--color-body);
   background:
-    radial-gradient(ellipse at 20% 50%, #f5f0fa 0%, var(--color-bg) 50%, #faf5f2 100%);
+    radial-gradient(ellipse at 20% 50%, #edf2f8 0%, var(--color-bg) 50%, #f0f4fa 100%);
   background-attachment: fixed;
   min-height: 100vh;
   display: flex;
@@ -272,7 +318,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(250, 248, 245, 0.85);
+  background: rgba(244, 246, 250, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
@@ -393,7 +439,7 @@ main {
 }
 
 .error-text {
-  color: #c06c6c;
+  color: #b0606c;
 }
 
 /* ============================================
@@ -478,103 +524,80 @@ main {
 }
 
 /* ============================================
-   诗词视觉图
+   诗词视觉图 — 夜空星辰
    ============================================ */
 
 .poem-visual {
   margin-top: 1.5rem;
   border-radius: 14px;
   overflow: hidden;
-  background: linear-gradient(160deg, #3a2e4a 0%, #4a3550 25%, #5c3a3a 60%, #3d2d35 100%);
-  padding: 2.2rem 1.8rem;
-  text-align: center;
+  height: 320px;
   position: relative;
+  background: linear-gradient(180deg,
+    #0a1628 0%,
+    #0d1f3c 30%,
+    #132442 55%,
+    #162848 75%,
+    #1a2d50 100%);
 }
 
-/* 顶部装饰光晕 */
+/* 地平线光晕 */
 .poem-visual::before {
   content: '';
   position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,220,180,0.15) 0%, transparent 70%);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(80,120,180,0.15) 0%, rgba(60,100,160,0.06) 40%, transparent 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
-/* 底部装饰光点 */
+/* 远山剪影 */
 .poem-visual::after {
   content: '';
   position: absolute;
-  bottom: 20px;
-  right: 30px;
-  width: 80px;
+  bottom: 0;
+  left: -5%;
+  right: -5%;
   height: 80px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,200,160,0.08) 0%, transparent 70%);
+  background:
+    linear-gradient(175deg,
+      transparent 0%,
+      rgba(8,15,28,0.6) 15%,
+      rgba(6,12,24,0.85) 40%,
+      rgba(4,8,16,0.95) 100%);
+  border-radius: 50% 60% 0 0 / 40% 45% 0 0;
   pointer-events: none;
+  z-index: 3;
 }
 
-.poem-visual .visual-title {
-  font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
-  color: #f0e0cc;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.9rem;
-  position: relative;
+/* 星星 */
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
   z-index: 1;
+  animation: star-twinkle var(--twinkle-dur, 2.5s) ease-in-out infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+  box-shadow: 0 0 var(--glow-size, 2px) rgba(200,220,255,0.3);
 }
 
-/* 标题下装饰线 */
-.poem-visual .visual-divider {
-  display: block;
-  width: 40px;
-  height: 2px;
-  margin: 0 auto 1.2rem;
-  background: linear-gradient(90deg, transparent, rgba(210,180,150,0.6), transparent);
-  border-radius: 1px;
+@keyframes star-twinkle {
+  0%, 100% { opacity: var(--star-opacity, 0.7); }
+  50% { opacity: calc(var(--star-opacity, 0.7) * 0.3); }
 }
 
-.poem-visual .visual-line {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  font-size: clamp(0.95rem, 2vw, 1.1rem);
-  color: rgba(230,210,190,0.85);
-  line-height: 2.1;
-  margin: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.poem-visual .visual-stanza-break {
-  display: block;
-  margin-top: 0.8rem;
-}
-
-.poem-visual .visual-author {
-  margin-top: 1.4rem;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: rgba(200,175,150,0.55);
-  letter-spacing: 0.06em;
-  position: relative;
-  z-index: 1;
-}
-
-/* 移动端调整 */
+/* 移动端视觉图 */
 @media (max-width: 640px) {
   .poem-visual {
-    padding: 1.6rem 1.2rem;
+    height: 240px;
     border-radius: 10px;
   }
 
-  .poem-visual .visual-line {
-    line-height: 2;
+  .poem-visual::after {
+    height: 50px;
   }
 }
 
@@ -635,7 +658,6 @@ main {
   }
 }
 
-/* 不同尺寸的叶子 */
 .leaf.sm { font-size: 0.9rem; }
 .leaf.md { font-size: 1.3rem; }
 .leaf.lg { font-size: 1.7rem; }
