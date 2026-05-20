@@ -192,6 +192,8 @@ body {
 main {
   flex: 1;
   padding: 0 1rem 4rem;
+  position: relative;
+  z-index: 2;
 }
 
 .poems-container {
