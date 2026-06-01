@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>阅启【我的喜欢】 — 晚睐</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .fav-wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .fav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .fav-header h1 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-heading);
+      letter-spacing: 0.06em;
+    }
+
+    .fav-header .back-link {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      color: var(--color-meta);
+      text-decoration: none;
+    }
+
+    .fav-header .back-link:hover { color: var(--color-accent); }
+
+    /* 添加表单 */
+    .fav-form-card {
+      background: var(--color-card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .fav-form-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--color-heading);
+      margin-bottom: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--color-meta);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-group textarea,
+    .form-group input {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background: var(--color-bg);
+      color: var(--color-body);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group textarea:focus,
+    .form-group input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(91,141,176,0.12);
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      line-height: 1.9;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      padding: 0.5rem 1.3rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--color-accent-light); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-meta);
+    }
+    .btn-outline:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+    .btn-sm {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.7rem;
+    }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #e0c8c8;
+      color: #b0606c;
+      font-size: 0.78rem;
+      padding: 0.25rem 0.7rem;
+    }
+    .btn-danger:hover { background: #fdf4f4; }
+
+    /* 收藏列表 */
+    .fav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .fav-card {
+      background: var(--color-card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 2rem 2rem 1.5rem;
+      position: relative;
+    }
+
+    .fav-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #d4a0b0, #c0a0b8, #a0b8d0);
+      border-radius: var(--radius-card) var(--radius-card) 0 0;
+    }
+
+    .fav-card .fav-text {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      line-height: 2;
+      color: var(--color-heading);
+      margin-bottom: 1rem;
+      white-space: pre-wrap;
+    }
+
+    .fav-card .fav-text::before {
+      content: '「';
+      color: var(--color-accent-light);
+    }
+
+    .fav-card .fav-text::after {
+      content: '」';
+      color: var(--color-accent-light);
+    }
+
+    .fav-card .fav-source {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--color-meta);
+      margin-bottom: 0.25rem;
+    }
+
+    .fav-card .fav-date {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: rgba(107,142,165,0.5);
+    }
+
+    .fav-card .fav-actions {
+      position: absolute;
+      top: 0.8rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--color-meta);
+      font-family: var(--font-ui);
+      font-size: 0.95rem;
+    }
+
+    .empty-state .empty-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-heading);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 20px;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 640px) {
+      .fav-card { padding: 1.5rem 1.2rem 1.2rem; }
+      .fav-card .fav-text { font-size: 1.05rem; line-height: 1.9; }
+      .fav-card .fav-actions { top: 0.5rem; right: 0.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fav-wrapper">
+    <div class="fav-header">
+      <h1>阅启【我的喜欢】</h1>
+      <a href="index.html" class="back-link">← 返回首页</a>
+    </div>
+
+    <!-- 添加表单 -->
+    <div class="fav-form-card">
+      <h2 id="form-title">✎ 添加喜欢的句子</h2>
+      <div class="form-group">
+        <label for="fav-text">句子内容 *</label>
+        <textarea id="fav-text" placeholder="在此粘贴或输入你喜欢的句子…"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="fav-source">出处</label>
+        <input type="text" id="fav-source" placeholder="如：天总会亮 · 晚睐 / 《某某书》…" maxlength="100">
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-save">收藏</button>
+        <button class="btn btn-outline" id="btn-clear">清空</button>
+      </div>
+      <input type="hidden" id="edit-id" value="">
+    </div>
+
+    <!-- 收藏列表 -->
+    <div class="fav-list" id="fav-list"></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var STORAGE_KEY = 'user-favorites';
+
+    var textInp = document.getElementById('fav-text');
+    var sourceInp = document.getElementById('fav-source');
+    var editId = document.getElementById('edit-id');
+    var btnSave = document.getElementById('btn-save');
+    var btnClear = document.getElementById('btn-clear');
+    var formTitle = document.getElementById('form-title');
+    var favList = document.getElementById('fav-list');
+
+    /* ---- 加载 ---- */
+    function loadStored() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+      catch (e) { return []; }
+    }
+
+    function saveStored(items) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
+
+    /* ---- 保存 ---- */
+    function save() {
+      var text = textInp.value.trim();
+      if (!text) { toast('请输入句子内容'); textInp.focus(); return; }
+
+      var items = loadStored();
+      if (editId.value) {
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].id === editId.value) {
+            items[i].text = text;
+            items[i].source = sourceInp.value.trim();
+            break;
+          }
+        }
+        toast('已更新');
+      } else {
+        items.push({
+          id: 'fav-' + Date.now(),
+          text: text,
+          source: sourceInp.value.trim(),
+          date: new Date().toISOString().split('T')[0]
+        });
+        toast('已收藏');
+      }
+
+      saveStored(items);
+      clearForm();
+      render();
+    }
+
+    function clearForm() {
+      textInp.value = '';
+      sourceInp.value = '';
+      editId.value = '';
+      formTitle.textContent = '✎ 添加喜欢的句子';
+      btnSave.textContent = '收藏';
+    }
+
+    function editItem(id) {
+      var items = loadStored();
+      var item = items.find(function (it) { return it.id === id; });
+      if (!item) return;
+      textInp.value = item.text;
+      sourceInp.value = item.source || '';
+      editId.value = item.id;
+      formTitle.textContent = '✎ 编辑句子';
+      btnSave.textContent = '保存修改';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function deleteItem(id) {
+      if (!confirm('确定删除这条收藏？')) return;
+      var items = loadStored().filter(function (it) { return it.id !== id; });
+      saveStored(items);
+      if (editId.value === id) clearForm();
+      render();
+      toast('已删除');
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function render() {
+      var items = loadStored();
+      if (items.length === 0) {
+        favList.innerHTML = '<div class="empty-state"><span class="empty-icon">📖</span>还没有收藏的句子<br>在上方输入喜欢的句子开始收藏吧</div>';
+        return;
+      }
+
+      var html = '';
+      items.slice().reverse().forEach(function (item) {
+        html += '<div class="fav-card">';
+        html += '<div class="fav-actions">';
+        html += '<button class="btn btn-outline btn-sm" data-edit="' + item.id + '">编辑</button>';
+        html += '<button class="btn btn-danger" data-delete="' + item.id + '">删除</button>';
+        html += '</div>';
+        html += '<div class="fav-text">' + esc(item.text) + '</div>';
+        if (item.source) {
+          html += '<div class="fav-source">— ' + esc(item.source) + '</div>';
+        }
+        html += '<div class="fav-date">' + esc(item.date) + '</div>';
+        html += '</div>';
+      });
+      favList.innerHTML = html;
+
+      favList.querySelectorAll('[data-edit]').forEach(function (btn) {
+        btn.addEventListener('click', function () { editItem(this.dataset.edit); });
+      });
+      favList.querySelectorAll('[data-delete]').forEach(function (btn) {
+        btn.addEventListener('click', function () { deleteItem(this.dataset.delete); });
+      });
+    }
+
+    /* ---- Toast ---- */
+    var toastEl = document.getElementById('toast');
+    var toastTimer;
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
+    }
+
+    /* ---- 事件 ---- */
+    btnSave.addEventListener('click', save);
+    btnClear.addEventListener('click', clearForm);
+
+    /* ---- 初始 ---- */
+    render();
+  })();
+  </script>
+</body>
+</html>
