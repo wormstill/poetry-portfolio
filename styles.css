@@ -332,6 +332,22 @@ body {
   border-color: var(--color-accent);
 }
 
+/* 编辑入口 */
+.editor-nav-link {
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  color: var(--color-meta);
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.editor-nav-link:hover {
+  color: var(--color-accent);
+  background: rgba(91,141,176,0.08);
+}
+
 /* ============================================
    英雄区
    ============================================ */
