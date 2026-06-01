@@ -23,15 +23,22 @@
 
   /* ---- 幕布揭晓 ---- */
   var curtain = document.getElementById('curtain');
-  document.documentElement.style.overflow = 'hidden';
+  var curtainShown = sessionStorage.getItem('curtain-shown');
 
-  curtain.addEventListener('click', function () {
+  if (curtainShown) {
+    curtain.style.display = 'none';
     document.documentElement.style.overflow = '';
-    this.classList.add('open');
-    this.addEventListener('transitionend', function () {
-      this.style.display = 'none';
-    }, { once: true });
-  });
+  } else {
+    document.documentElement.style.overflow = 'hidden';
+    curtain.addEventListener('click', function () {
+      sessionStorage.setItem('curtain-shown', '1');
+      document.documentElement.style.overflow = '';
+      this.classList.add('open');
+      this.addEventListener('transitionend', function () {
+        this.style.display = 'none';
+      }, { once: true });
+    });
+  }
 
   /* ---- 枫叶飘落特效 ---- */
   (function initLeaves() {
