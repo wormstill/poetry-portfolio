@@ -67,15 +67,25 @@
       return res.json();
     })
     .then(function (poems) {
-      allPoems = poems;
+      var stored = [];
+      try { stored = JSON.parse(localStorage.getItem('user-poems') || '[]'); } catch (e) {}
+      allPoems = poems.concat(stored);
       buildFilters();
       render();
     })
     .catch(function (err) {
-      container.innerHTML =
-        '<p class="error-text">无法加载作品，请稍后再试。<br><small>' +
-        err.message +
-        '</small></p>';
+      var stored = [];
+      try { stored = JSON.parse(localStorage.getItem('user-poems') || '[]'); } catch (e) {}
+      if (stored.length) {
+        allPoems = stored;
+        buildFilters();
+        render();
+      } else {
+        container.innerHTML =
+          '<p class="error-text">无法加载作品，请稍后再试。<br><small>' +
+          err.message +
+          '</small></p>';
+      }
     });
 
   /* ---- 生成筛选按钮 ---- */

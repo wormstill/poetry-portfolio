@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>编辑发布 — 晚睐</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .editor-wrapper {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    .editor-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .editor-header .back-link {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      color: var(--color-meta);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .editor-header .back-link:hover { color: var(--color-accent); }
+
+    .editor-header h1 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      color: var(--color-heading);
+      letter-spacing: 0.06em;
+    }
+
+    .editor-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .editor-main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 表单 */
+    .form-panel {
+      background: var(--color-card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 2rem;
+    }
+
+    .form-panel h2 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--color-heading);
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .form-row .form-group { flex: 1; }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--color-meta);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      background: var(--color-bg);
+      color: var(--color-body);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(91,141,176,0.12);
+    }
+
+    .form-group textarea {
+      min-height: 220px;
+      line-height: 1.9;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+
+    .btn {
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      padding: 0.55rem 1.4rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--color-accent-light); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-meta);
+    }
+
+    .btn-outline:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #dcc;
+      color: #b0606c;
+      font-size: 0.8rem;
+      padding: 0.3rem 0.8rem;
+    }
+
+    .btn-danger:hover { background: #fdf2f2; }
+
+    /* 预览 */
+    .preview-panel h2 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--color-heading);
+      margin-bottom: 1.2rem;
+    }
+
+    #preview-card {
+      min-height: 150px;
+    }
+
+    .preview-placeholder {
+      text-align: center;
+      color: var(--color-meta);
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      padding: 3rem 1rem;
+      background: var(--color-bg);
+      border-radius: var(--radius-card);
+    }
+
+    /* 已保存列表 */
+    .saved-section {
+      border-top: 1px solid var(--color-border);
+      padding-top: 2rem;
+    }
+
+    .saved-section h2 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      color: var(--color-heading);
+      margin-bottom: 1rem;
+    }
+
+    .saved-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .saved-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--color-card);
+      border-radius: 10px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .saved-item .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .saved-item .item-title {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--color-heading);
+    }
+
+    .saved-item .item-meta {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--color-meta);
+      margin-top: 0.15rem;
+    }
+
+    .saved-item .item-actions {
+      display: flex;
+      gap: 0.4rem;
+      flex-shrink: 0;
+    }
+
+    .empty-saved {
+      text-align: center;
+      color: var(--color-meta);
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      padding: 2rem;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-heading);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 20px;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="editor-wrapper">
+    <div class="editor-header">
+      <h1>✎ 编辑发布</h1>
+      <a href="index.html" class="back-link">← 返回首页</a>
+    </div>
+
+    <div class="editor-main">
+      <!-- 表单 -->
+      <div class="form-panel">
+        <h2 id="form-title">新作品</h2>
+        <div class="form-group">
+          <label for="poem-title">标题 *</label>
+          <input type="text" id="poem-title" placeholder="输入标题…" maxlength="60">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="poem-author">作者</label>
+            <input type="text" id="poem-author" value="晚睐" maxlength="30">
+          </div>
+          <div class="form-group">
+            <label for="poem-category">分类</label>
+            <select id="poem-category">
+              <option value="poetry">诗歌</option>
+              <option value="prose">散文</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="poem-date">日期</label>
+            <input type="date" id="poem-date">
+          </div>
+          <div class="form-group">
+            <label for="poem-form">体裁</label>
+            <input type="text" id="poem-form" placeholder="如：自由诗、随笔…" maxlength="20">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="poem-lines">诗文内容 *（每行一句，空行分段）</label>
+          <textarea id="poem-lines" placeholder="在此输入诗文…&#10;每行一句&#10;&#10;空行表示分段"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" id="btn-save">发布</button>
+          <button class="btn btn-outline" id="btn-clear">清空</button>
+        </div>
+        <input type="hidden" id="edit-id" value="">
+      </div>
+
+      <!-- 预览 -->
+      <div class="preview-panel">
+        <h2>预览</h2>
+        <div id="preview-card">
+          <div class="preview-placeholder">填写标题和内容后<br>此处显示实时预览</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 已保存列表 -->
+    <div class="saved-section">
+      <h2>已保存的作品 (<span id="saved-count">0</span>)</h2>
+      <div class="saved-list" id="saved-list">
+        <div class="empty-saved">暂无作品，填写表单后点击「发布」</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var STORAGE_KEY = 'user-poems';
+
+    var titleInp = document.getElementById('poem-title');
+    var authorInp = document.getElementById('poem-author');
+    var categorySel = document.getElementById('poem-category');
+    var dateInp = document.getElementById('poem-date');
+    var formInp = document.getElementById('poem-form');
+    var linesInp = document.getElementById('poem-lines');
+    var editId = document.getElementById('edit-id');
+    var btnSave = document.getElementById('btn-save');
+    var btnClear = document.getElementById('btn-clear');
+    var formTitle = document.getElementById('form-title');
+    var previewCard = document.getElementById('preview-card');
+    var savedList = document.getElementById('saved-list');
+    var savedCount = document.getElementById('saved-count');
+
+    /* ---- 设置今天日期 ---- */
+    dateInp.value = new Date().toISOString().split('T')[0];
+
+    /* ---- 加载已保存 ---- */
+    function loadStored() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) { return []; }
+    }
+
+    function saveStored(poems) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(poems));
+    }
+
+    /* ---- 实时预览 ---- */
+    function updatePreview() {
+      var poem = buildPoemFromForm();
+      if (!poem.title && !poem.lines.length) {
+        previewCard.innerHTML = '<div class="preview-placeholder">填写标题和内容后<br>此处显示实时预览</div>';
+        return;
+      }
+      previewCard.innerHTML = createCardHTML(poem);
+    }
+
+    function buildPoemFromForm() {
+      var rawLines = linesInp.value.split('\n');
+      return {
+        id: editId.value || '',
+        title: titleInp.value.trim(),
+        author: authorInp.value.trim() || '晚睐',
+        category: categorySel.value,
+        date: dateInp.value,
+        form: formInp.value.trim(),
+        lines: rawLines
+      };
+    }
+
+    function createCardHTML(poem) {
+      var h = '<article class="poem-card" style="pointer-events:none">';
+      h += '<div class="card-header">';
+      h += '<h2 class="card-title">' + esc(poem.title || '（无标题）') + '</h2>';
+      h += '<span class="card-author">— ' + esc(poem.author) + '</span>';
+      h += '</div>';
+      h += '<div class="card-body">';
+      poem.lines.forEach(function (line) {
+        if (line === '') {
+          h += '<span class="stanza-break" aria-hidden="true"></span>';
+        } else {
+          h += '<p>' + esc(line) + '</p>';
+        }
+      });
+      h += '</div>';
+      var parts = [];
+      if (poem.date) parts.push(poem.date);
+      if (poem.form) parts.push(poem.form);
+      if (parts.length) {
+        h += '<div class="card-meta">' + esc(parts.join(' · ')) + '</div>';
+      }
+      h += '</article>';
+      return h;
+    }
+
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /* ---- 保存 ---- */
+    function save() {
+      var poem = buildPoemFromForm();
+      if (!poem.title) { toast('请输入标题'); titleInp.focus(); return; }
+      var hasContent = poem.lines.some(function (l) { return l.trim() !== ''; });
+      if (!hasContent) { toast('请输入诗文内容'); linesInp.focus(); return; }
+
+      var poems = loadStored();
+
+      if (editId.value) {
+        // 编辑模式
+        for (var i = 0; i < poems.length; i++) {
+          if (poems[i].id === editId.value) {
+            poems[i] = poem;
+            break;
+          }
+        }
+        toast('已更新');
+      } else {
+        // 新增
+        poem.id = 'user-' + Date.now();
+        poems.push(poem);
+        toast('已发布');
+      }
+
+      saveStored(poems);
+      clearForm();
+      renderSaved();
+    }
+
+    /* ---- 清空表单 ---- */
+    function clearForm() {
+      titleInp.value = '';
+      authorInp.value = '晚睐';
+      categorySel.value = 'poetry';
+      dateInp.value = new Date().toISOString().split('T')[0];
+      formInp.value = '';
+      linesInp.value = '';
+      editId.value = '';
+      formTitle.textContent = '新作品';
+      btnSave.textContent = '发布';
+      updatePreview();
+    }
+
+    /* ---- 编辑已有 ---- */
+    function editPoem(id) {
+      var poems = loadStored();
+      var poem = poems.find(function (p) { return p.id === id; });
+      if (!poem) return;
+      titleInp.value = poem.title;
+      authorInp.value = poem.author;
+      categorySel.value = poem.category || 'poetry';
+      dateInp.value = poem.date || '';
+      formInp.value = poem.form || '';
+      linesInp.value = poem.lines.join('\n');
+      editId.value = poem.id;
+      formTitle.textContent = '编辑作品';
+      btnSave.textContent = '保存修改';
+      updatePreview();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ---- 删除 ---- */
+    function deletePoem(id) {
+      if (!confirm('确定删除这篇作品？')) return;
+      var poems = loadStored().filter(function (p) { return p.id !== id; });
+      saveStored(poems);
+      if (editId.value === id) clearForm();
+      renderSaved();
+      toast('已删除');
+    }
+
+    /* ---- 渲染已保存列表 ---- */
+    function renderSaved() {
+      var poems = loadStored();
+      savedCount.textContent = poems.length;
+
+      if (poems.length === 0) {
+        savedList.innerHTML = '<div class="empty-saved">暂无作品，填写表单后点击「发布」</div>';
+        return;
+      }
+
+      var html = '';
+      poems.slice().reverse().forEach(function (p) {
+        html += '<div class="saved-item">';
+        html += '<div class="item-info">';
+        html += '<div class="item-title">' + esc(p.title) + '</div>';
+        html += '<div class="item-meta">' + esc(p.author) + ' · ' + esc(p.category || '') + ' · ' + esc(p.date || '') + '</div>';
+        html += '</div>';
+        html += '<div class="item-actions">';
+        html += '<button class="btn btn-outline" data-edit="' + p.id + '" style="padding:0.3rem 0.8rem;font-size:0.82rem">编辑</button>';
+        html += '<button class="btn btn-danger" data-delete="' + p.id + '">删除</button>';
+        html += '</div>';
+        html += '</div>';
+      });
+      savedList.innerHTML = html;
+
+      savedList.querySelectorAll('[data-edit]').forEach(function (btn) {
+        btn.addEventListener('click', function () { editPoem(this.dataset.edit); });
+      });
+      savedList.querySelectorAll('[data-delete]').forEach(function (btn) {
+        btn.addEventListener('click', function () { deletePoem(this.dataset.delete); });
+      });
+    }
+
+    /* ---- Toast ---- */
+    var toastEl = document.getElementById('toast');
+    var toastTimer;
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 2000);
+    }
+
+    /* ---- 事件绑定 ---- */
+    btnSave.addEventListener('click', save);
+    btnClear.addEventListener('click', clearForm);
+    linesInp.addEventListener('input', updatePreview);
+    titleInp.addEventListener('input', updatePreview);
+    authorInp.addEventListener('input', updatePreview);
+
+    /* ---- 初始 ---- */
+    renderSaved();
+    updatePreview();
+  })();
+  </script>
+</body>
+</html>
