@@ -1,28 +1,32 @@
 (function () {
   'use strict';
 
-  /* ---- 幕布星尘粒子 ---- */
-  (function initStardust() {
-    var container = document.getElementById('curtain-stardust');
-    var count = 35;
+  /* ---- 梅花落瓣 ---- */
+  (function initPetals() {
+    var container = document.getElementById('curtain-petals');
+    var colors = ['#eab8c8', '#f0c0d0', '#e8a8b8', '#f2c8d4', '#ecb4c4', '#f4ccd8', '#eebcc8'];
+    var count = 22;
     for (var i = 0; i < count; i++) {
-      var dot = document.createElement('span');
-      dot.className = 'stardust-dot';
-      var size = 1 + Math.random() * 2.5;
-      dot.style.width = size + 'px';
-      dot.style.height = size + 'px';
-      dot.style.left = Math.random() * 100 + '%';
-      dot.style.top = Math.random() * 100 + '%';
-      dot.style.animationDuration = (8 + Math.random() * 16) + 's';
-      dot.style.animationDelay = Math.random() * 10 + 's';
-      dot.style.opacity = (0.2 + Math.random() * 0.5);
-      container.appendChild(dot);
+      var petal = document.createElement('span');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + '%';
+      petal.style.setProperty('--petal-color', colors[Math.floor(Math.random() * colors.length)]);
+      petal.style.width = (8 + Math.random() * 10) + 'px';
+      petal.style.height = (10 + Math.random() * 10) + 'px';
+      petal.style.animationDuration = (10 + Math.random() * 16) + 's';
+      petal.style.animationDelay = Math.random() * 14 + 's';
+      petal.style.setProperty('--drift', (Math.random() * 80 - 40) + 'px');
+      petal.style.setProperty('--spin', (200 + Math.random() * 400) + 'deg');
+      container.appendChild(petal);
     }
   })();
 
   /* ---- 幕布揭晓 ---- */
   var curtain = document.getElementById('curtain');
+  document.documentElement.style.overflow = 'hidden';
+
   curtain.addEventListener('click', function () {
+    document.documentElement.style.overflow = '';
     this.classList.add('open');
     this.addEventListener('transitionend', function () {
       this.style.display = 'none';

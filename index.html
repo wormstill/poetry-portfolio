@@ -14,15 +14,139 @@
   <a href="#main-content" class="skip-link">跳到内容</a>
 
   <div id="curtain" class="curtain">
-    <div class="curtain-panel curtain-left"></div>
-    <div class="curtain-panel curtain-right"></div>
-    <div class="curtain-moon"></div>
-    <div class="curtain-stardust" id="curtain-stardust"></div>
-    <div class="curtain-center">
-      <h1 class="curtain-title">晚睐</h1>
-      <p class="curtain-subtitle">诗与短文的栖息地</p>
-      <span class="curtain-hint">轻触任意处进入</span>
+    <div class="curtain-cover">
+      <svg class="plum-branch" viewBox="0 0 600 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="pg1" cx="40%" cy="35%"><stop offset="0%" stop-color="#fcd8e4"/><stop offset="70%" stop-color="#f0a8c0"/><stop offset="100%" stop-color="#e088a8"/></radialGradient>
+          <radialGradient id="pg2" cx="40%" cy="35%"><stop offset="0%" stop-color="#fde0ea"/><stop offset="70%" stop-color="#f2b8cc"/><stop offset="100%" stop-color="#e898b0"/></radialGradient>
+          <radialGradient id="pg3" cx="40%" cy="35%"><stop offset="0%" stop-color="#fad0e0"/><stop offset="70%" stop-color="#eea0b8"/><stop offset="100%" stop-color="#dc80a0"/></radialGradient>
+          <radialGradient id="bud" cx="40%" cy="35%"><stop offset="0%" stop-color="#f8c0d0"/><stop offset="100%" stop-color="#d87090"/></radialGradient>
+          <filter id="soft-shadow"><feGaussianBlur in="SourceAlpha" stdDeviation="2"/><feOffset dx="0" dy="1"/><feComponentTransfer><feFuncA type="linear" slope="0.12"/></feComponentTransfer><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+
+        <!-- 背景淡月 -->
+        <circle cx="420" cy="200" r="90" fill="none" stroke="rgba(180,160,140,0.12)" stroke-width="0.8"/>
+        <circle cx="420" cy="200" r="95" fill="none" stroke="rgba(180,160,140,0.06)" stroke-width="0.5"/>
+
+        <!-- 主枝干 -->
+        <path d="M 560,-10 Q 500,60 460,130 Q 420,200 400,260 Q 370,340 320,420 Q 270,500 200,580" stroke="#2a1610" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+        <!-- 枝干纹理 -->
+        <path d="M 555,-5 Q 495,62 455,132 Q 415,202 395,262 Q 365,342 315,422" stroke="#3a2218" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+        <!-- 分支1 (向上) -->
+        <path d="M 440,180 Q 380,130 310,90 Q 240,50 160,40" stroke="#2a1610" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+        <!-- 分支2 (细枝) -->
+        <path d="M 360,320 Q 310,290 240,270 Q 170,255 100,280" stroke="#2a1610" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+
+        <!-- 分支3 -->
+        <path d="M 270,480 Q 220,460 170,470 Q 120,485 60,520" stroke="#2a1610" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+        <!-- == 花朵 == -->
+
+        <!-- 花1: 大花 (440, 180) - 分支点 -->
+        <g transform="translate(440,180) scale(1.2)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="-13" rx="5.5" ry="14" fill="url(#pg1)" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-13" rx="5.5" ry="14" fill="url(#pg1)" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-13" rx="5.5" ry="14" fill="url(#pg2)" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-13" rx="5.5" ry="14" fill="url(#pg1)" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-13" rx="5.5" ry="14" fill="url(#pg2)" transform="rotate(288)"/>
+          <circle cx="0" cy="0" r="3.5" fill="#f0d860"/>
+          <circle cx="-1" cy="-1" r="1" fill="#d8b830" opacity="0.6"/>
+          <circle cx="1.5" cy="0.5" r="0.8" fill="#d8b830" opacity="0.5"/>
+          <circle cx="0" cy="1.5" r="0.7" fill="#d8b830" opacity="0.4"/>
+        </g>
+
+        <!-- 花2: (310, 90) -->
+        <g transform="translate(310,90) scale(1.0)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="-12" rx="5" ry="13" fill="url(#pg2)" transform="rotate(15)"/>
+          <ellipse cx="0" cy="-12" rx="5" ry="13" fill="url(#pg1)" transform="rotate(87)"/>
+          <ellipse cx="0" cy="-12" rx="5" ry="13" fill="url(#pg2)" transform="rotate(159)"/>
+          <ellipse cx="0" cy="-12" rx="5" ry="13" fill="url(#pg1)" transform="rotate(231)"/>
+          <ellipse cx="0" cy="-12" rx="5" ry="13" fill="url(#pg2)" transform="rotate(303)"/>
+          <circle cx="0" cy="0" r="3.2" fill="#f0d860"/>
+          <circle cx="-0.8" cy="-0.8" r="0.9" fill="#d8b830" opacity="0.5"/>
+          <circle cx="1" cy="1" r="0.7" fill="#d8b830" opacity="0.4"/>
+        </g>
+
+        <!-- 花3: (240, 270) -->
+        <g transform="translate(240,270) scale(0.9)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg1)" transform="rotate(-10)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg3)" transform="rotate(62)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg1)" transform="rotate(134)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg2)" transform="rotate(206)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg1)" transform="rotate(278)"/>
+          <circle cx="0" cy="0" r="3" fill="#f0d860"/>
+        </g>
+
+        <!-- 花4: (160, 40) - 小 -->
+        <g transform="translate(160,40) scale(0.75)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg2)" transform="rotate(5)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg1)" transform="rotate(77)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg2)" transform="rotate(149)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg3)" transform="rotate(221)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg1)" transform="rotate(293)"/>
+          <circle cx="0" cy="0" r="2.8" fill="#f0d860"/>
+        </g>
+
+        <!-- 花5: (330, 380) -->
+        <g transform="translate(330,390) scale(0.85)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg2)" transform="rotate(20)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg1)" transform="rotate(92)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg3)" transform="rotate(164)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg1)" transform="rotate(236)"/>
+          <ellipse cx="0" cy="-11" rx="4.5" ry="12" fill="url(#pg2)" transform="rotate(308)"/>
+          <circle cx="0" cy="0" r="3" fill="#f0d860"/>
+        </g>
+
+        <!-- 花6: (500, 100) - 侧向 -->
+        <g transform="translate(500,110) scale(0.8)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg1)" transform="rotate(-20)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg2)" transform="rotate(52)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg1)" transform="rotate(124)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg3)" transform="rotate(196)"/>
+          <ellipse cx="0" cy="-10" rx="4" ry="11" fill="url(#pg1)" transform="rotate(268)"/>
+          <circle cx="0" cy="0" r="2.5" fill="#f0d860"/>
+        </g>
+
+        <!-- == 花苞 == -->
+
+        <!-- 苞1 -->
+        <g transform="translate(395,240)">
+          <ellipse cx="0" cy="0" rx="3.5" ry="5" fill="url(#bud)" transform="rotate(-30)"/>
+          <ellipse cx="2" cy="-2" rx="2.5" ry="4" fill="url(#bud)" transform="rotate(20)"/>
+          <path d="M 0,5 Q -1,10 -2,14" stroke="#3a2218" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- 苞2 -->
+        <g transform="translate(260,160)">
+          <ellipse cx="0" cy="0" rx="3" ry="4.5" fill="url(#bud)" transform="rotate(-15)"/>
+          <ellipse cx="1.5" cy="-1.5" rx="2" ry="3.5" fill="url(#bud)" transform="rotate(30)"/>
+          <path d="M 0,4 Q -1,8 -2,11" stroke="#3a2218" stroke-width="1" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- 苞3 -->
+        <g transform="translate(190,500)">
+          <ellipse cx="0" cy="0" rx="2.8" ry="4" fill="url(#bud)" transform="rotate(-25)"/>
+          <ellipse cx="1.5" cy="-1" rx="2" ry="3.2" fill="url(#bud)" transform="rotate(25)"/>
+          <path d="M 0,3.5 Q -0.5,7 -1,10" stroke="#3a2218" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- == 飘落花瓣 == -->
+        <ellipse cx="350" cy="300" rx="3" ry="4.5" fill="#f0b8c8" opacity="0.5" transform="rotate(45 350 300)"/>
+        <ellipse cx="200" cy="180" rx="2.5" ry="4" fill="#f2c0d0" opacity="0.4" transform="rotate(-30 200 180)"/>
+        <ellipse cx="450" cy="350" rx="2.8" ry="4.2" fill="#eeb0c0" opacity="0.45" transform="rotate(70 450 350)"/>
+        <ellipse cx="120" cy="150" rx="2.2" ry="3.5" fill="#f4c4d4" opacity="0.38" transform="rotate(-60 120 150)"/>
+      </svg>
+
+      <div class="curtain-center">
+        <h1 class="curtain-title">晚睐</h1>
+        <p class="curtain-subtitle">诗与短文的栖息地</p>
+        <span class="curtain-hint">轻触任意处进入</span>
+      </div>
     </div>
+
+    <div class="curtain-petals" id="curtain-petals"></div>
   </div>
 
   <header class="site-header">
