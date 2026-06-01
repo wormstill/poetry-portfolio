@@ -174,30 +174,9 @@
       if (poem.form) parts.push(poem.form);
       meta.textContent = parts.join(' · ');
 
-      /* 夜空星辰视觉图 */
-      var visual = document.createElement('div');
-      visual.className = 'poem-visual';
-
-      var starCount = 45 + Math.floor(Math.random() * 50);
-      for (var s = 0; s < starCount; s++) {
-        var star = document.createElement('span');
-        star.className = 'star';
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        var starSize = 1 + Math.random() * 2.8;
-        star.style.width = starSize + 'px';
-        star.style.height = starSize + 'px';
-        star.style.setProperty('--star-opacity', (0.25 + Math.random() * 0.7));
-        star.style.setProperty('--twinkle-dur', (2 + Math.random() * 4) + 's');
-        star.style.setProperty('--twinkle-delay', Math.random() * 3 + 's');
-        star.style.setProperty('--glow-size', (starSize * 1.5) + 'px');
-        visual.appendChild(star);
-      }
-
       card.appendChild(header);
       card.appendChild(body);
       card.appendChild(meta);
-      card.appendChild(visual);
       frag.appendChild(card);
     });
 
