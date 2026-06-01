@@ -6,18 +6,12 @@
   <title>阅启【我的喜欢】 — 晚睐</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    .fav-wrapper {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 1.5rem 1rem 3rem;
-    }
-
     .fav-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      padding: 2rem 0 0.75rem;
       border-bottom: 1px solid var(--color-border);
     }
 
@@ -240,10 +234,21 @@
 </head>
 <body>
 
-  <div class="fav-wrapper">
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-title">晚睐</a>
+      <nav class="filter-nav" aria-label="导航">
+        <a href="index.html" class="back-link" style="font-family:var(--font-ui);font-size:0.85rem;color:var(--color-meta);text-decoration:none;padding:0.4rem 1rem;">← 返回首页</a>
+      </nav>
+    </div>
+  </header>
+
+  <main style="flex:1;padding:0 1rem 3rem;position:relative;z-index:2;">
+    <div style="max-width:720px;margin:0 auto;">
+
     <div class="fav-header">
       <h1>阅启【我的喜欢】</h1>
-      <a href="index.html" class="back-link">← 返回首页</a>
+      <span style="font-family:var(--font-ui);font-size:0.82rem;color:var(--color-meta);" id="fav-count"></span>
     </div>
 
     <!-- 添加表单 -->
@@ -267,6 +272,9 @@
     <!-- 收藏列表 -->
     <div class="fav-list" id="fav-list"></div>
   </div>
+
+    </div>
+  </main>
 
   <div class="toast" id="toast"></div>
 
@@ -359,6 +367,7 @@
 
     function render() {
       var items = loadStored();
+      document.getElementById('fav-count').textContent = items.length + ' 条收藏';
       if (items.length === 0) {
         favList.innerHTML = '<div class="empty-state"><span class="empty-icon">📖</span>还没有收藏的句子<br>在上方输入喜欢的句子开始收藏吧</div>';
         return;
