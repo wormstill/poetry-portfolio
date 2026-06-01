@@ -69,7 +69,7 @@
     .then(function (poems) {
       var stored = [];
       try { stored = JSON.parse(localStorage.getItem('user-poems') || '[]'); } catch (e) {}
-      allPoems = poems.concat(stored);
+      allPoems = poems.concat(stored).reverse();
       buildFilters();
       render();
     })
@@ -77,7 +77,7 @@
       var stored = [];
       try { stored = JSON.parse(localStorage.getItem('user-poems') || '[]'); } catch (e) {}
       if (stored.length) {
-        allPoems = stored;
+        allPoems = stored.reverse();
         buildFilters();
         render();
       } else {
